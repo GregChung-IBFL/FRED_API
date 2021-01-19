@@ -1,0 +1,15 @@
+FRED_API : # Settings for how to access the FRED® API
+    BASE_URL : "https://api.stlouisfed.org/fred"
+    ROOT_CATEGORY : 0     # Which category to start from, 0 is the topmost category published by FRED
+    LIMIT_DEPTH : 2       # How many levels down below the root do we want to expand?
+    LIMIT_SERIES : 12     # Maximum number of series under each category to request/cache/display
+    THROTTLE : 2.0        # Seconds to pause between API calls, to avoid running afoul of terms of use by spamming it with requests
+
+API_CACHE : # Controls CacheTool
+    ENABLED : True        # True to use the cache
+    FORMAT : JSON         # JSON
+    FILE : "cache.json"   # Filename
+    EXPIRE : 24           # Number of hours cache entries are valid for
+
+# Name of the file to write the API data layout (ASCII format)
+OUTPUT_FILE_TEXT : "FRED API Data Layout.txt"

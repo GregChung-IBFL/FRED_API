@@ -1,0 +1,39 @@
+formatters:
+    consolePrintFormatter:
+        format: "%(message)s"
+
+    fileFormatter:
+        # Level is padded to 8 spaces (the width of "CRITICAL") to align all messages
+        format: "{asctime} {levelname:<8}: {message}"
+        style: "{"
+        datefmt: "%Y-%m-%d %H:%M:%S"
+
+handlers:
+    # Prints INFO and above to stdout, without timestamp or level, i.e. mimics print()
+    consolePrintHandler:
+        class: logging.StreamHandler
+        formatter: consolePrintFormatter
+        level: INFO
+        stream: ext://sys.stdout
+
+    # Writes everything to debugging log file, with timestamp and level
+    fileDebugHandler:
+        class: logging.FileHandler
+        filename: "log_debug.txt"
+        formatter: fileFormatter
+        level: DEBUG
+        mode: w
+
+    # Writes WARNING and above to log file, with timestamp and level
+    fileWarningHandler:
+        class: logging.FileHandler
+        filename: "log.txt"
+        formatter: fileFormatter
+        level: WARNING
+        mode: w
+
+root:
+    handlers: [ consolePrintHandler, fileDebugHandler, fileWarningHandler ]
+    level: NOTSET
+
+version: 1
