@@ -9,19 +9,19 @@ DEFAULT_CACHE_FILE_NAME = "cache.json"  # Imaginative, isn't it?
 class Cacher :
     """My basic tool for caching data.  For this demo, it caches the API's responses in order
     to reduce the number of times I hit the server during development & debugging.
-    
+
     Implemented as a (cache key) dictionary of (cache values) dictionaries.  The values contain
     a timestamp with the actual cached data.  The timestamp (UTC) tracks when the data was
     written to the cache.  Data older than a specied cutoff is expired and will not be used.
-    
-    There are a few configurable settings which are specified during initialization.  
+
+    There are a few configurable settings which are specified during initialization.
     The cache is persisted to a JSON formatted file.  The file is loaded automatically upon
     initialization of the Cacher, and fully re-written using an explicit function call.
 
     Cache usage metrics are tracked by a nested CacheStats class.
 
     The Cacher utilizes the root logger, which must be initialized first.
-    
+
     Exceptions raised within the Cacher are logged but are not fatal.
 
     This code is intentionally simple; it doesn't try to do any cleanup of old cache entries,
@@ -87,7 +87,7 @@ class Cacher :
             with open( self.cache_file_name, "w" ) as file:
                 json.dump( self.cache_dict, file, indent = 4 )
         except:
-            # TODO: In a real program, I would handle specific errors, e.g. permission denied.
+            # NOTE: In a real program, I would handle specific errors, e.g. permission denied.
             logging.error( F'Failed to save cache file "{self.cache_file_name}".' )
         else:
             logging.info( F'Saved cache file "{self.cache_file_name}".' )
@@ -108,11 +108,11 @@ class Cacher :
             return None
 
         # Found an entry in the cache for this key, but have to check the expiration date.
-        timestampStr = cache_entry.get( "timestamp" )
-        if timestampStr :
+        timestamp_str = cache_entry.get( "timestamp" )
+        if timestamp_str :
             try:
-                timestampUTC = datetime.fromisoformat( timestampStr )
-                if ( datetime.now(timezone.utc) - timestampUTC) < timedelta( hours = self.cache_expiration_hours ) :
+                timestamp_utc = datetime.fromisoformat( timestamp_str )
+                if ( datetime.now(timezone.utc) - timestamp_utc) < timedelta( hours = self.cache_expiration_hours ) :
                     # The timestamp is valid, return the corresponding data.
                     logging.debug( F'Returning cache for "{key}".' )
                     self.stats.hit()
@@ -149,7 +149,7 @@ class Cacher :
             return
 
         # Timestamp is the current UTC time in ISO format, e.g. "2021-01-01T09:30:00.000000+00:00"
-        cache_entry = { "timestamp" : datetime.now( timezone.utc ).isoformat(), 
+        cache_entry = { "timestamp" : datetime.now( timezone.utc ).isoformat(),
                         "data" : data }
         self.cache_dict[key] = cache_entry
 
