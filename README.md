@@ -1,9 +1,28 @@
-# FRED_API
-[python]
+# FRED_API Demo
+This program demonstrates using the Federal Reserve Economic Data (FRED®) API.  The demo queries the API to map the data available from FRED.  The structure of the data can be represented in a tree hierarchy.
 
-This is a demo of browsing the data structure of Federal Reserve Economic Data (FRED®) through its REST API.  FRED provides a tree-like structure, with nested layers of categories and data series under those categories.  The API does not provide a way to search or browse the data structure; to find some series of interest, you must start with the top-level category, then drill down into narrower categories until you find the desired series.  The demo traverses this structure and outputs the data layout.
+- Coded in Python, with add-on libraries [treelib](https://treelib.readthedocs.io), [PyYAML](https://pyyaml.org)
+- Queries REST API of an external service 
+- Implements a basic caching module to cache API requests
+- Configuration and settings stored in .json and .yaml files, not in code
+
+#### Version History
+- v1: The API is queried to generate the layout of data Categories and Series.  The tree layout is saved to a text file.
 
 
-## More about the FRED service
-FRED is a service provided by the Federal Reserve Bank of St. Louis.  To use the API, you must first receive a developer API key.  This key is passed in as a URL parameter in all calls to the API.  See https://fred.stlouisfed.org/ for more information about FRED as well as the developer API.
-Note:  While the API does not have search or browse capabilities to find a particular series, the interactive website does provide search tools.
+## About the FRED service
+FRED is a service provided by the Federal Reserve Bank of St. Louis.  See https://fred.stlouisfed.org/ for more information.
+
+#### Structure of the Data
+The economic data is represented by Series, which are organized under nested layers of Categories.  From the handful of top-level categories, you can drill down into increasingly more specific subcategories until you reach a data series.  For example:
+
+* &lt;FRED API root&gt; (category #0)
+  * Population, Employment, & Labor Markets (category #10)
+    * Weekly Initial Claims (category #32240)
+      * 4-Week Moving Average of Initial Claims (series IC4WSA)
+
+Note: some data series are listed under more than one category.
+
+#### Developer API Key
+A private developer API key is required to access the FRED API.  In order to run the demo code, you would need to request your own API key, as my key is not included in this project.  Because the code will not run out-of-the-box, I have included sample output and logging files.
+
