@@ -3,7 +3,7 @@ Greg Chung
 
 Sample program to demonstrate getting data from the Federal Reserve Economic 
 Data (FRED®) API.  The application downloads the available "Category" and 
-data "Series" information using the REST API, and presents a hierarchial
+data "Series" information using the REST API, and presents a hierarchical
 representation of the data, e.g.:
     <root>
         <category1>
@@ -210,8 +210,8 @@ class Application :
         try:
             data = self.make_caching_request( fullURL )
             return json.loads(data)  
-        except Exception as e:
-            logging.error( F'Failed to get or decode response for "{fullURL}", aborting!' )
+        except:
+            logging.error( F'Failed to get or decode response for "{fullURL}"!' )
         
         # Return an empty dict
         return {}
@@ -239,7 +239,7 @@ class Application :
         return self.get_rest_data( url )
 
 
-    def process_series( self, series, categoryID, tree ) :
+    def process_series( self, series: dict, categoryID: str, tree ) :
         """Process a data series by appending the @series info into the @tree 
         as a child of the tree node identified with @categoryID.
 
@@ -247,7 +247,7 @@ class Application :
         Child nodes of the header include a brief excerpt of the series' notes text, and 
         a list of key attributes of the series, such as the data update frequency.
         """
-        def reformat_date_string( api_datetime ) :
+        def reformat_date_string( api_datetime: str ) -> str:
             """Returns the @api_datetime string translated into a different display format.
 
             Used for reformatting last updated and observation range dates.  I parse the

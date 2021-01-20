@@ -68,7 +68,7 @@ class Cacher :
                 self.cache_dict = json.load( file )
         except FileNotFoundError:
             logging.info( F'Cache file "{self.cache_file_name}" not found.' )
-        except Exception as e:
+        except:
             # Disable the cache to prevent overwriting the existing file, so we have a chance to inspect/debug the bad file.
             self.enabled = False
             logging.warning( F'Cache file "{self.cache_file_name}" failed to load.  Cache will not be used.' )
@@ -122,7 +122,7 @@ class Cacher :
                     logging.debug( F'Cached expired for "{key}".' )
                     self.stats.expired()
                     return None
-            except Exception as e:
+            except:
                 pass    # Fall through
 
         # Couldn't find the timestamp, or couldn't parse it, or something else bad happened.
