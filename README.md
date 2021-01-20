@@ -5,6 +5,7 @@ This program demonstrates using the Federal Reserve Economic Data (FRED®) API. 
 - Queries REST API of an external service 
 - Implements a basic caching module to cache API requests
 - Configuration and settings stored in .json and .yaml files, not in code
+- Developed using Visual Studio Code
 
 #### Version History
 - v1: The API is queried to generate the layout of data Categories and Series.  The tree layout is saved to a text file.
